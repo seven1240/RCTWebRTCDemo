@@ -33,8 +33,13 @@
 
 'use strict';
 
-import VertoLiveArray from './verto-livearray';
-import VertoConfMan from './verto-confman';
+var localStorage = {
+	getItem: function(k) { return localStorage[k]; },
+	setItem: function(k, v) { localStorage[k] = v;}
+};
+
+// import VertoLiveArray from './verto-livearray';
+// import VertoConfMan from './verto-confman';
 import VertoDialog from './verto-dialog';
 import VertoRTC from './verto-rtc';
 import {
@@ -157,7 +162,7 @@ class Verto {
 		}
 
 		if (this.options.ringFile && this.options.tag) {
-			this.ringer = document.getElementById(tag);
+			// this.ringer = document.getElementById(tag);
 		}
 
 		// this.call('login', {});
@@ -1034,7 +1039,7 @@ if (window && typeof exports == 'undefined' && typeof module == 'undefined') {
 }
 
 // window.Verto = Verto;
-window.verto = singleton;
+// window.verto = singleton;
 
 /* For Emacs:
  * Local Variables:
