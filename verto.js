@@ -12,21 +12,11 @@ import {
   Platform,
 } from 'react-native';
 
-import {
-  RTCPeerConnection,
-  RTCMediaStream,
-  RTCIceCandidate,
-  RTCSessionDescription,
-  RTCView,
-  MediaStreamTrack,
-  getUserMedia,
-} from 'react-native-webrtc';
-
 import verto from './verto/verto';
 import { Verto } from './verto/verto';
 
 export function verto_params() {
-	var host = "192.168.7.7";
+	var host = "seven.local";
 	var url = "wss://" + host + ":8082/ws";
 	var username = "1000"; //localStorage.getItem('xui.username');
 	var password = "1234"; //localStorage.getItem('xui.password');
