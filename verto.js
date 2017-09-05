@@ -91,7 +91,7 @@ export const verto_callbacks = {
 class VertoPhone extends React.Component {
 	constructor(props) {
 		super(props);
-		this.state = {}
+		this.state = {destNumber: "9196"}
 	}
 
 	componentDidMount() {
@@ -99,14 +99,76 @@ class VertoPhone extends React.Component {
 		console.log("aaaa");
 	}
 
-	render() {
-		return <View>
-		<Text>Hello</Text>
-		<Text>Hello</Text>
-		<Text>Hello</Text>
+	makeCall() {
+		console.log("calling", this.state.destNumber);
 
+		verto.newCall({
+			destination_number: this.state.destNumber,
+			caller_id_name: '1000',
+			caller_id_number: '1000',
+			useVideo: false,
+			useCamera: false,
+			useMic: 'any',
+			useSpeak: 'any',
+			useStereo: true,
+			outgoingBandwidth: 'default',
+			incomingBandwidth: 'default',
+			deviceParams: {
+				useMic: 'any',
+				useSpeak: 'any',
+				useCamera: 'any'
+			}
+		});
+	}
+
+	render() {
+		return <View style={styles.container}>
+			<Text>Hello</Text>
+
+			<View>
+				<TextInput
+					onChangeText={value => this.setState({destNumber: value})}
+					value={this.state.destNumber}
+				/>
+
+			</View>
+			<View>
+				<TouchableHighlight
+					onPress={this.makeCall.bind(this)}>
+					<Text>Call</Text>
+				</TouchableHighlight>
+			</View>
 		</View>
 	}
 }
+
+const styles = StyleSheet.create({
+	selfView: {
+		width: 200,
+		height: 150,
+	},
+
+	remoteView: {
+		width: 200,
+		height: 150,
+	},
+
+	container: {
+		flex: 1,
+		justifyContent: 'center',
+		backgroundColor: '#F5FCFF',
+	},
+
+	welcome: {
+		fontSize: 20,
+		textAlign: 'center',
+		margin: 10,
+	},
+
+	listViewContainer: {
+		height: 150,
+	},
+});
+
 
 AppRegistry.registerComponent('RCTWebRTCDemo', () => VertoPhone);
