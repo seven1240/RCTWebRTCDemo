@@ -32,6 +32,17 @@
 
 'use strict';
 
+import {
+  RTCPeerConnection,
+  RTCMediaStream,
+  RTCIceCandidate,
+  RTCSessionDescription,
+  RTCView,
+  MediaStreamTrack,
+  getUserMedia,
+} from 'react-native-webrtc';
+
+
 // Find the line in sdpLines that starts with |prefix|, and, if specified,
 // contains |substr| (case-insensitive search).
 function findLine(sdpLines, prefix, substr) {
@@ -179,7 +190,7 @@ function FSRTCPeerConnection(options) {
 		}
 	}
 
-	var peer = new window.RTCPeerConnection(config);
+	var peer = new RTCPeerConnection(config);
 
 	openOffererChannel();
 	var x = 0;
@@ -431,7 +442,7 @@ var video_constraints = {
 	//optional: []
 };
 
-function getUserMedia(options) {
+function xgetUserMedia(options) {
 	var n = navigator,
 	media;
 	n.getMedia = n.getUserMedia || n.mozGetUserMedia;
@@ -934,16 +945,25 @@ export default class VertoRTC {
 		console.log("Audio constraints", mediaParams.audio);
 		console.log("Video constraints", mediaParams.video);
 
+		function logError(error) {
+			console.log("logError", error);
+		}
+
 		if (mediaParams.audio || mediaParams.video) {
 			getUserMedia({
-				constraints: {
-					audio: mediaParams.audio,
-					video: mediaParams.video
-				},
-				video: mediaParams.useVideo,
-				onsuccess: onSuccess,
-				onerror: onError
-			});
+				audio: true,
+				video: false,
+			}, onSuccess, logError);
+
+			// getUserMedia({
+			// 	constraints: {
+			// 		audio: mediaParams.audio,
+			// 		video: mediaParams.video
+			// 	},
+			// 	video: mediaParams.useVideo,
+			// 	onsuccess: onSuccess,
+			// 	onerror: onError
+			// });
 		} else {
 			onSuccess(null);
 		}

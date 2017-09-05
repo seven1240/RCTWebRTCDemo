@@ -284,7 +284,7 @@ class Verto {
 
 		if (this._ws_socket.readyState < 1) {
 			// The websocket is not open yet; we have to set sending of the message in onopen.
-			self = this; // In closure below, this is set to the WebSocket.  Use self instead.
+			// self = this; // In closure below, this is set to the WebSocket.  Use self instead.
 			this.q.push(request_json);
 		} else {
 			// We have a socket and it should be ready to send on.

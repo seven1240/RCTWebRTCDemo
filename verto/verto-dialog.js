@@ -77,7 +77,7 @@ export default class VertoDialog {
 
 
 		if (dialog.params.tag) {
-			dialog.audioStream = document.getElementById(dialog.params.tag);
+			// dialog.audioStream = document.getElementById(dialog.params.tag);
 
 			if (dialog.params.useVideo) {
 				dialog.videoStream = dialog.audioStream;
