@@ -204,7 +204,12 @@ function FSRTCPeerConnection(options) {
 		}
 
 		if (options.type == "offer") {
-			options.onICESDP(peer.localDescription);
+			peer.createOffer(function(sessionDescription) {
+				console.log("aaaaa azzz", sessionDescription.sdp);
+				sessionDescription.sdp = serializeSdp(sessionDescription.sdp);
+				// peer.setLocalDescription(sessionDescription);
+				options.onICESDP(sessionDescription);
+			}, onSdpError, options.constraints);
 		} else {
 			if (!x && options.onICESDP) {
 				options.onICESDP(peer.localDescription);
@@ -236,6 +241,11 @@ function FSRTCPeerConnection(options) {
 			ice_handler();
 		}
 	};
+
+	peer.onnegotiationneeded = function() {
+		console.log('onnegotiationneeded');
+		createOffer();
+	}
 
 	// attachStream = MediaStream;
 	if (options.attachStream) peer.addStream(options.attachStream);
@@ -274,6 +284,7 @@ function FSRTCPeerConnection(options) {
 		if (!options.onOfferSDP) return;
 
 		peer.createOffer(function(sessionDescription) {
+				console.log("aaaaa", sessionDescription.sdp);
 				sessionDescription.sdp = serializeSdp(sessionDescription.sdp);
 				peer.setLocalDescription(sessionDescription);
 				options.onOfferSDP(sessionDescription);
@@ -407,7 +418,7 @@ function FSRTCPeerConnection(options) {
 	return {
 		addAnswerSDP: function(sdp, cbSuccess, cbError) {
 
-			peer.setRemoteDescription(new window.RTCSessionDescription(sdp), cbSuccess ? cbSuccess : onSdpSuccess, cbError ? cbError : onSdpError);
+			peer.setRemoteDescription(new RTCSessionDescription(sdp), cbSuccess ? cbSuccess : onSdpSuccess, cbError ? cbError : onSdpError);
 		},
 		addICE: function(candidate) {
 			peer.addIceCandidate(new window.RTCIceCandidate({

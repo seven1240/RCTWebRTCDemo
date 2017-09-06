@@ -51,8 +51,7 @@ function getLocalStream(isFront, callback) {
   }
   getUserMedia({
     audio: true,
-    video: false,
-    xvideo: {
+    video: {
       mandatory: {
         minWidth: 640, // Provide your own width, height and frame rate here
         minHeight: 360,
